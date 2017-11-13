@@ -1,0 +1,1 @@
+// pic.baidu.com detail page
