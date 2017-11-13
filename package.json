@@ -1,0 +1,16 @@
+{
+  "name": "pic-crawler",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "mkdirp": "^0.5.1",
+    "moment": "^2.19.2",
+    "optimist": "^0.6.1",
+    "puppeteer": "^0.12.0",
+    "request": "^2.83.0"
+  }
+}
