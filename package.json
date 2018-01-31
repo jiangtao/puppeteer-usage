@@ -7,6 +7,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "fakerator": "^0.3.0",
     "mkdirp": "^0.5.1",
     "moment": "^2.19.2",
     "optimist": "^0.6.1",
