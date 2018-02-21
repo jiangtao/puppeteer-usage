@@ -1,7 +1,7 @@
-const fakerator = require('fakerator')
+const fakerator = require('fakerator')()
 module.exports = {
   get ip() {
-    return fakerator.internet.ip()
+    return fakerator.internet.ip
   },
   get referer() {
     const q = [

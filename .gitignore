@@ -57,5 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 
+sct.js
+test.js
 other
-
+.download
