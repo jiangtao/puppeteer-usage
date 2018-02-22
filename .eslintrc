@@ -1,0 +1,40 @@
+{
+  "parserOptions": {
+      "ecmaVersion": 7,
+      "sourceType": "module",
+      "ecmaFeatures": {
+          "jsx": true
+      }
+  },
+  "extends": "airbnb-base/legacy",
+  "rules": {
+      "consistent-return": 1,
+      "prefer-destructuring": 0,
+      "no-mixed-spaces-and-tabs": 0,
+      "no-console": 0,
+      "no-tabs": 0,
+      "one-var":0,
+      "no-unused-vars": 2,
+      "no-multi-spaces": 2,
+      "no-await-in-loop": 0,
+      "no-param-reassign": 0,
+      "no-useless-escape": 0,
+      "no-plusplus": 1,
+      "radix": 1,
+      "key-spacing": [
+        2,
+        {
+          "beforeColon": false,
+          "afterColon": true,
+          "align": {
+            "on": "colon"
+          }
+        }
+      ],
+      "no-return-await": 0
+  },
+  "env": {
+      "node": true,
+      "es6": true
+  }
+}

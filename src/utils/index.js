@@ -1,12 +1,14 @@
-const faker = require('./faker')
-const time = require('./time')
+const faker = require('./faker');
+const time = require('./time');
+const request = require('./request');
 
 module.exports = {
   sleep(n) {
-    return new Promise((resolve,reject) => {
-      setTimeout(resolve,n * 1000)
-    })
+    return new Promise((resolve) => {
+      setTimeout(resolve, n * 1000);
+    });
   },
-  faker: faker,
-  time: time
-}
+  faker,
+  time,
+  request
+};

@@ -1,9 +1,11 @@
 {
-  "name": "pic-crawler",
+  "name": "puppeteer-usage",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "lint": "./node_modules/.bin/eslint src *.js"
+  },
   "author": "",
   "license": "MIT",
   "dependencies": {
@@ -13,5 +15,13 @@
     "optimist": "^0.6.1",
     "puppeteer": "^0.12.0",
     "request": "^2.83.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.2.2",
+    "eslint": "^4.15.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-html": "^4.0.1",
+    "eslint-plugin-import": "^2.8.0",
+    "log4js": "^2.5.3"
   }
 }
