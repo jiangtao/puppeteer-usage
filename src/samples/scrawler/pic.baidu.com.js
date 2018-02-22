@@ -2,19 +2,19 @@
 const { promisify } = require('util');
 const mkdirp = promisify(require('mkdirp'));
 
-const { autoScroll,browser } = require('../../core');
+const { autoScroll,newBrowser } = require('../../core');
 const { isDownloadImageByResponse } = require('../../core/is');
-const { dir,logger } = require('../../config');
+const { downloadDir,logger } = require('../../config');
 const { time,request } = require('../../utils');
 
 const word = process.argv.slice(2).pop() || '卡通';
 (async () => {
   try {
     let count = 0;
-    const fullDir = `${dir}/${time.date}/${word}`;
+    const fullDir = `${downloadDir}/${time.date}/${word}`;
     await mkdirp(fullDir);
 
-    const newBrowser = await browser();
+    const newBrowser = await newBrowser();
     const page = await newBrowser.newPage();
 
     page.on('response',async (data) => {

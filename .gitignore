@@ -58,7 +58,7 @@ typings/
 .env
 
 sct.js
-test.js
 other
 .download
+.screenshot
 logs

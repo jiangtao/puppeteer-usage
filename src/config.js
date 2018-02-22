@@ -4,7 +4,8 @@ const log4js = require('log4js');
 const root = process.cwd();
 
 module.exports = {
-  dir: path.resolve(process.cwd(), '.download'),
+  downloadDir: path.resolve(process.cwd(), '.download'),
+  screenDir: path.resolve(process.cwd(), '.screenshot'),
   logger: {
     info(){
       const logger = log4js.getLogger()
