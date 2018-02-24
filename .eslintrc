@@ -21,6 +21,7 @@
       "no-useless-escape": 0,
       "no-plusplus": 1,
       "radix": 1,
+      "no-use-before-define": 1,
       "key-spacing": [
         2,
         {
