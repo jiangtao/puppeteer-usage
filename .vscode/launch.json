@@ -7,6 +7,12 @@
     {
       "type": "node",
       "request": "launch",
+      "name": "screentshot",
+      "program": "${workspaceFolder}/src/samples/screenshot.js"
+    },
+    {
+      "type": "node",
+      "request": "launch",
       "name": "pic.baidu.com scrawler",
       "program": "${workspaceFolder}/src/samples/scrawler/pic.baidu.com.js"
     },

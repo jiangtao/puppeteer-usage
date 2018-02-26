@@ -13,20 +13,20 @@ const { logger, screenDir } = require('../config');
     await mkdirp(fullDir);
     const newBrowser = await browser();
     const page = await newBrowser.newPage();
-    // const device = devices['iPhone 6'];
-    // await page.emulate(device);
-    await page.goto('https://borrower.houbank.com/academy', { waitUntil: 'networkidle2' });
+    const device = devices['iPhone 6'];
+    await page.setViewport(device.viewport);
+    await page.goto('http://i.houmifin.com/loan/index', { waitUntil: 'networkidle2' });
 
+    const result = await page.evaluate(() => {
+      const scrollElement = document.querySelector('#main');
+      return {
+        height: scrollElement.scrollHeight
+      };
+    });
+
+    await page.setViewport(Object.assign({}, device.viewport, result));
     await page.screenshot({
-      path    : `${fullDir}/full.jpg`,
-      // clip: {
-      //   x     : 0,
-      //   y     : 0,
-      //   width : device.viewport.width * 2,
-      //   height: device.viewport.height * 4
-      // },
-      fullPage: true,
-      quality : 60
+      path: `${fullDir}/full.jpg`
     });
     await newBrowser.close();
   } catch (e) {
