@@ -13,9 +13,9 @@ const { logger, screenDir } = require('../config');
     await mkdirp(fullDir);
     const newBrowser = await browser();
     const page = await newBrowser.newPage();
-    const device = devices['iPhone 6'];
-    await page.emulate(device);
-    await page.goto('http://i.houmifin.com', { waitUntil: 'networkidle2' });
+    // const device = devices['iPhone 6'];
+    // await page.emulate(device);
+    await page.goto('https://borrower.houbank.com/academy', { waitUntil: 'networkidle2' });
 
     await page.screenshot({
       path    : `${fullDir}/full.jpg`,
