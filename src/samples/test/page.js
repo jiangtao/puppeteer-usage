@@ -1,5 +1,5 @@
 
-// const devices = require('puppeteer/DeviceDescriptors');
+const devices = require('puppeteer/DeviceDescriptors');
 const { promisify } = require('util');
 const mkdirp = promisify(require('mkdirp'));
 
@@ -13,20 +13,20 @@ const {
   try {
     const pages = [
       {
-        url : 'https://borrower.houbank.com/academy',
-        name: 'houbank_academy'
+        url : 'http://i.houmifin.com/loan/index',
+        name: 'houmifin_index'
       },
       {
-        url : 'https://borrower.houbank.com/home',
-        name: 'houbank_home'
+        url : 'http://i.houmifin.com/loan/detail?product=27',
+        name: 'houmifin_product'
       },
       {
-        url : 'https://www.houbank.com/homeinfo/infoDisclosure/organizationInfo',
-        name: 'houbank_info'
+        url : 'http://i.houmifin.com/loan/search',
+        name: 'houbank_search'
       },
       {
-        url : 'https://www.houbank.com/homeinfo/companyInfo',
-        name: 'houbank_company'
+        url : 'http://i.houmifin.com/loan/search?amount=89',
+        name: 'houbank_search_query'
       }
     ];
     const newBrowser = await browser();
@@ -44,14 +44,24 @@ const {
 
 async function execute({ url, name }, newBrowser) {
   const page = await newBrowser.newPage();
+  const device = devices['iPhone 6']
 
   // 以新的文档运行，window.navigator.puppeteer_tested window.platform.puppeteer_tested 防止被污染
   await page.evaluateOnNewDocument(() => detect('puppeteer_tested'));
-  // 以iphone 6运行
-  // await page.emulate(devices['iPhone 6']);
+  await page.setViewport(device.viewport);
   const fullDir = `${screenDir}/${name}`;
   await mkdirp(fullDir);
   await page.goto(url, { waitUntil: 'networkidle2' });
-  await page.screenshot({ path: `${fullDir}/${time.date}.jpg`, fullPage: true, quality: 60 });
+
+  // 处理滚动条不是body的情况
+  const result = await page.evaluate(() => {
+    const scrollElement = document.querySelector('#main');
+    return {
+      height: scrollElement.scrollHeight
+    };
+  });
+
+  await page.setViewport(Object.assign({}, device.viewport, result));
+  await page.screenshot({ path: `${fullDir}/${time.date}.jpg`, quality: 60 });
 }
 
