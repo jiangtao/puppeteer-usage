@@ -8,7 +8,9 @@ module.exports = {
     const q = [
       'https://www.baidu.com',
       'https://lianjia.com/',
-      'http://maoyan.com/'
+      'http://maoyan.com/',
+      'https://weibo.com',
+      'https://github.com/'
     ];
     return q[parseInt(Math.random() * q.length)];
   },

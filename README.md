@@ -1,8 +1,8 @@
 # puppeteer-usage
 
-基于puppeteer的一些实例应用。
+基于puppeteer的一些实例应用，本教程仅用来做技术交流使用，请勿用于商业行为。
 
-## 爬虫
+### 爬虫
 
 针对[百度图片](https://pic.baidu.com/)搜索的爬虫，此类页面特点：
 

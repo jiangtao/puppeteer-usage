@@ -1,0 +1,72 @@
+
+const { promisify } = require('util');
+const mkdirp = promisify(require('mkdirp'));
+const { autoScroll, browser } = require('../../core');
+const { isDownloadImageByResponse } = require('../../core/is');
+const { downloadDir, logger } = require('../../config');
+const {
+  time, request, sleep, faker
+} = require('../../utils');
+
+const word = process.argv.slice(2).pop() || '金融';
+(async () => {
+  try {
+    let count = 0;
+    const USER = {
+      password: process.env.huaban_pass,
+      mobile  : process.env.huaban_mobile
+    };
+    const fullDir = `${downloadDir}/${time.date}/${word}`;
+
+    await mkdirp(fullDir);
+
+    const newBrowser = await browser();
+    const page = await newBrowser.newPage();
+    // 伪造ip
+    // TODO: 花瓣做了根据 手机号 做校验，在一定时间段内限制用户登录，所以只能注册多个号搞事情
+    await page.setUserAgent(JSON.stringify({
+      'X-Forwarded-For': faker.ip,
+      Referer          : faker.referer
+    }));
+
+    // 进入花瓣，保证页面过长的时候，居中
+    await await page.setViewport({
+      width : 1024,
+      height: 600 // limit height and make the login selector is in visible area
+    });
+    await page.goto('http://huaban.com/');
+    // 模拟登录
+    await page.click('.login-nav a.login');
+    await page.type('input[name=email]', USER.mobile);
+    await page.type('input[name=password]', USER.password);
+    await page.click('.mail-login .btn.btn18.rbtn');
+    await sleep(2);
+    await page.type('input#query', word);
+    await page.click('#search_form .go');
+    await await page.setViewport({
+      width : 1024,
+      height: 1500 // 拉长整个页面，保证滚动条滚动的时间长一些
+    });
+    await sleep(1); // 保证页面渲染完成
+    page.on('response', async (data) => {
+      try {
+        if (isDownloadImageByResponse(data)) {
+          count++;
+          const headers = data.headers();
+          const extname = headers['content-type'].split('/').pop();
+          const fullPath = `${fullDir}/${count}.${extname}`;
+          const result = await request.download(data.url(), fullPath, { count });
+          logger.info(`${result.count} : ${result.src}`);
+        }
+      } catch (e) {
+        logger.error(e);
+      }
+    });
+
+    await autoScroll(page, 2000);
+    await newBrowser.close();
+  } catch (e) {
+    logger.error(e);
+  }
+})();
+

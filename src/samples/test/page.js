@@ -2,7 +2,6 @@
 const devices = require('puppeteer/DeviceDescriptors');
 const { promisify } = require('util');
 const mkdirp = promisify(require('mkdirp'));
-
 const { browser, detect } = require('../../core');
 const { screenDir, logger } = require('../../config');
 const {

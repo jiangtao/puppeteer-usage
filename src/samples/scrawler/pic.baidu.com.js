@@ -21,9 +21,10 @@ const word = process.argv.slice(2).pop() || '卡通';
       try {
         if (isDownloadImageByResponse(data)) {
           count++;
-          const extname = data.headers['content-type'].split('/').pop();
+          const headers = data.headers();
+          const extname = headers['content-type'].split('/').pop();
           const fullPath = `${fullDir}/${count}.${extname}`;
-          const result = await request.download(data.url, fullPath, { count });
+          const result = await request.download(data.url(), fullPath, { count });
           logger.info(`${result.count} : ${result.src}`);
         }
       } catch (e) {
