@@ -17,7 +17,6 @@ module.exports = async function autoScroll(page, MAX_COUNT = 100) {
            * 2. 尝试MAX_COUNT次数滚动条还不动，有两种情况：没有数据了 或 接口返回太慢了 在 MAX_COUNT * 100 ms内还没反应过来
            *
            */
-          console.log(retry > MAX_COUNT && lastScroll === scrollTop);
           if (scrollTop === MAX_SCROLL || (retry > MAX_COUNT && lastScroll === scrollTop)) {
             clearInterval(interval);
             resolve();

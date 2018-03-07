@@ -1,6 +1,7 @@
 
 const devices = require('puppeteer/DeviceDescriptors');
 const { promisify } = require('util');
+const { existsSync } = require('fs');
 const mkdirp = promisify(require('mkdirp'));
 const { browser, detect } = require('../../core');
 const { screenDir, logger } = require('../../config');
@@ -13,19 +14,19 @@ const {
     const pages = [
       {
         url : 'http://i.houmifin.com/loan/index',
-        name: 'houmifin_index'
+        name: 'houmifin/index'
       },
       {
         url : 'http://i.houmifin.com/loan/detail?product=27',
-        name: 'houmifin_product'
+        name: 'houmifin/product'
       },
       {
         url : 'http://i.houmifin.com/loan/search',
-        name: 'houbank_search'
+        name: 'houmifin/search'
       },
       {
         url : 'http://i.houmifin.com/loan/search?amount=89',
-        name: 'houbank_search_query'
+        name: 'houmifin/search_query'
       }
     ];
     const newBrowser = await browser();
@@ -48,8 +49,10 @@ async function execute({ url, name }, newBrowser) {
   // 以新的文档运行，window.navigator.puppeteer_tested window.platform.puppeteer_tested 防止被污染
   await page.evaluateOnNewDocument(() => detect('puppeteer_tested'));
   await page.setViewport(device.viewport);
-  const fullDir = `${screenDir}/${name}`;
-  await mkdirp(fullDir);
+  const fullDir = `${screenDir}`;
+  if(!existsSync(fullDir)) {
+    await mkdirp(fullDir)
+  }
   await page.goto(url, { waitUntil: 'networkidle2' });
 
   // 处理滚动条不是body的情况
@@ -61,6 +64,6 @@ async function execute({ url, name }, newBrowser) {
   });
 
   await page.setViewport(Object.assign({}, device.viewport, result));
-  await page.screenshot({ path: `${fullDir}/${time.date}.jpg`, quality: 60 });
+  await page.screenshot({ path: `${fullDir}/${name}.${time.date}.jpg`, quality: 60 });
 }
 
