@@ -1592,6 +1592,10 @@ pac-resolver@~2.0.0:
     netmask "~1.0.4"
     thunkify "~2.1.1"
 
+page-diff@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/page-diff/-/page-diff-0.2.5.tgz#a0f4592a3fe57bca4ae2d2e7f501c5c19a353ed9"
+
 parse-json@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/parse-json/-/parse-json-2.2.0.tgz#f480f40434ef80741f8469099f8dea18f55a4dc9"

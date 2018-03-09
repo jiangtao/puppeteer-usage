@@ -6,6 +6,7 @@ const root = process.cwd();
 module.exports = {
   downloadDir: path.resolve(root, 'download'),
   screenDir  : path.resolve(root, 'screenshot'),
+  traceDir   : path.resolve(root, 'trace'),
   logger     : {
     info() {
       const logger = log4js.getLogger();

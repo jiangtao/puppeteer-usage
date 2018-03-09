@@ -20,14 +20,11 @@ const word = process.argv.slice(2).pop() || '金融';
 
     await mkdirp(fullDir);
 
-    const newBrowser = await browser();
+    const newBrowser = await browser({
+      headless: true
+    });
     const page = await newBrowser.newPage();
     // 伪造ip
-    // TODO: 花瓣做了根据 手机号 做校验，在一定时间段内限制用户登录，所以只能注册多个号搞事情
-    await page.setUserAgent(JSON.stringify({
-      'X-Forwarded-For': faker.ip,
-      Referer          : faker.referer
-    }));
 
     // 进入花瓣，保证页面过长的时候，居中
     await await page.setViewport({
