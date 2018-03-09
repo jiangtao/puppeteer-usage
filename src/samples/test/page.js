@@ -45,6 +45,7 @@ const {
 async function execute({ url, name }, newBrowser) {
   const page = await newBrowser.newPage();
   const device = devices['iPhone 6']
+  const downloadFile = `${name.split('/').join('.')}.${time.date}.jpg`
 
   // 以新的文档运行，window.navigator.puppeteer_tested window.platform.puppeteer_tested 防止被污染
   await page.evaluateOnNewDocument(() => detect('puppeteer_tested'));
@@ -64,6 +65,6 @@ async function execute({ url, name }, newBrowser) {
   });
 
   await page.setViewport(Object.assign({}, device.viewport, result));
-  await page.screenshot({ path: `${fullDir}/${name}.${time.date}.jpg`, quality: 60 });
+  await page.screenshot({ path: `${fullDir}/${downloadFile}`, quality: 60 });
 }
 
