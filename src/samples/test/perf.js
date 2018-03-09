@@ -25,13 +25,14 @@ const mkdirp = require('mkdirp');
       }
     ];
 
-    const newBrowser = await browser();
+    const newBrowser = await browser({
+      headless: false
+    });
 
     /* eslint-disable */
     for (const p of pages) {
       await perf(p,newBrowser);
     }
-
 
     await newBrowser.close();
   } catch (e) {
@@ -41,11 +42,13 @@ const mkdirp = require('mkdirp');
 
 async function perf(p,newBrowser) {
   const fullDir = `${traceDir}`;
+  const traceFile = p.name.split('/').join('.') + `.trace.json`
   if(!existsSync(fullDir)) {
     await mkdirp(fullDir)
   }
   const page = await newBrowser.newPage();
-  // await page.tracing.start({ path: `${fullDir}/${p.name}.trace.json` });
+  // generate timeline viewer
+  // await page.tracing.start({ path: `${fullDir}/${traceFile}` });
   await page.goto(p.url);
   // await page.tracing.stop();
 
