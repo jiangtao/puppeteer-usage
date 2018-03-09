@@ -1,11 +1,11 @@
 
 const { promisify } = require('util');
 const mkdirp = promisify(require('mkdirp'));
-
+const { writeFile } = require('fs');
 const { autoScroll, browser } = require('../../core');
 const { isDownloadImageByResponse } = require('../../core/is');
 const { downloadDir, logger } = require('../../config');
-const { time, request } = require('../../utils');
+const { time } = require('../../utils');
 
 const word = process.argv.slice(2).pop() || '卡通';
 (async () => {
@@ -17,15 +17,18 @@ const word = process.argv.slice(2).pop() || '卡通';
     const newBrowser = await browser();
     const page = await newBrowser.newPage();
 
-    page.on('response', async (data) => {
+    page.on('response', async (response) => {
       try {
-        if (isDownloadImageByResponse(data)) {
+        if (isDownloadImageByResponse(response)) {
           count++;
-          const headers = data.headers();
+          const headers = response.headers();
           const extname = headers['content-type'].split('/').pop();
           const fullPath = `${fullDir}/${count}.${extname}`;
-          const result = await request.download(data.url(), fullPath, { count });
-          logger.info(`${result.count} : ${result.src}`);
+          const buffer = await response.buffer();
+          const url = response.url();
+          writeFile(fullPath, buffer, () => {
+            logger.info(`${count} : ${url}`);
+          });
         }
       } catch (e) {
         logger.error(e);

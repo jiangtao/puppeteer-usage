@@ -1,6 +1,7 @@
 
 const { promisify } = require('util');
 const mkdirp = promisify(require('mkdirp'));
+const { writeFile } = require('fs');
 const { autoScroll, browser } = require('../../core');
 const { isDownloadImageByResponse } = require('../../core/is');
 const { downloadDir, logger } = require('../../config');
@@ -45,15 +46,18 @@ const word = process.argv.slice(2).pop() || '金融';
       height: 1500 // 拉长整个页面，保证滚动条滚动的时间长一些
     });
     await sleep(1); // 保证页面渲染完成
-    page.on('response', async (data) => {
+    page.on('response', async (response) => {
       try {
-        if (isDownloadImageByResponse(data)) {
+        if (isDownloadImageByResponse(response)) {
           count++;
-          const headers = data.headers();
+          const headers = response.headers();
           const extname = headers['content-type'].split('/').pop();
           const fullPath = `${fullDir}/${count}.${extname}`;
-          const result = await request.download(data.url(), fullPath, { count });
-          logger.info(`${result.count} : ${result.src}`);
+          const buffer = await response.buffer();
+          const url = response.url();
+          writeFile(fullPath, buffer, () => {
+            logger.info(`${count} : ${url}`);
+          });
         }
       } catch (e) {
         logger.error(e);
