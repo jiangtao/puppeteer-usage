@@ -31,11 +31,11 @@
 
 2. 按关注的特定用户来爬 比如说花瓣 我只想扒我关注的那些用户的收藏的图 怎么弄
 
-  1. 首先让 puppeteer 自动登录
-  2. 登录成功后，http://huaban.com/alf5iaibzg/following/
-  3. 每一个 page.$('.person-item')  links
-  4. 找到每个户口采集的主页 http://huaban.com/v9ux3qzokz8/pins/
-  5. 之后就是滚动爬图的逻辑
+  - 首先让 puppeteer 自动登录
+  - 登录成功后，http://huaban.com/alf5iaibzg/following/
+  - 每一个 page.$('.person-item')  links
+  - 找到每个户口采集的主页 http://huaban.com/v9ux3qzokz8/pins/
+  - 之后就是滚动爬图的逻辑
 
 
 3. 自动化功能测试的一种方案 e2e testing
