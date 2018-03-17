@@ -15,19 +15,14 @@
       - 获取weibo资讯类(头条)的信息
 
          对网站进行分析
-          1. 是否要登录
-          2. 访问的信息页面是什么样子的  （前端界面，API获取）
-          3. 采用什么技术 （puppeteer， request）
-
-      case1:
+         
+          - 是否要登录
+          - 访问的信息页面是什么样子的  （前端界面，API获取）
+          - 采用什么技术 （puppeteer， request）
 
       https://weibo.com/?category=1760
 
       1. title page.$('.list_des .list_title_b .S_txt1')
-
-
-- 验证线上运行是否正常
-
 
 2. 按关注的特定用户来爬 比如说花瓣 我只想扒我关注的那些用户的收藏的图 怎么弄
 
