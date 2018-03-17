@@ -22,7 +22,8 @@ const word = process.argv.slice(2).pop() || '金融';
     await mkdirp(fullDir);
 
     const newBrowser = await browser({
-      headless: false
+      headless: false,
+      timeout : 1200000
     });
     const page = await newBrowser.newPage();
     // 伪造ip
