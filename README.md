@@ -72,3 +72,4 @@ node src/samples/scrawler/pic.baidu.com.js 卡通
 ### 集成成系统
 
 - [ ] 集成服务
+- [ ] 破解验证码
