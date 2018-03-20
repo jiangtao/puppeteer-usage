@@ -69,7 +69,7 @@ node src/samples/scrawler/pic.baidu.com.js 卡通
 
 - 首页入口是否可点击，与 1中的功能其实是相似的
 
-### 集成成系统
+### TODO
 
 - [ ] 集成服务
 - [ ] 破解验证码
