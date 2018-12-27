@@ -2,15 +2,16 @@
  * @param {*} page puppeteer page对象
  * @param {*} lastScroll 初试滚动Y轴的位置
  */
-module.exports = async function autoScroll(page, MAX_COUNT = 100) {
+module.exports = async function autoScroll(page) {
   await page.evaluate(async () => {
+    var MAX_COUNT = 5
     await new Promise((resolve, reject) => {
       try {
         let lastScroll = 0;
         let retry = 0;
         const MAX_SCROLL = Number.MAX_SAFE_INTEGER;
         const interval = setInterval(() => {
-          window.scrollBy(0, 100);
+          window.scrollBy(0, 500);
           const scrollTop = document.documentElement.scrollTop;
           /**
            * 1. 达到javascript最大值

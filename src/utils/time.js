@@ -6,5 +6,8 @@ module.exports = {
   },
   get second() {
     return moment().format('YYYYMMDDHHmmSS');
+  },
+  get special() {
+    return moment().format('YYYY-MM-DD-HH_mm_SS')
   }
 };

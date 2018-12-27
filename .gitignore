@@ -62,4 +62,5 @@ other
 download
 screenshot
 trace
-logs
+*log*
+ignore*
