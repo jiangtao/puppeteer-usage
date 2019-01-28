@@ -4,7 +4,8 @@
  */
 module.exports = async function autoScroll(page) {
   await page.evaluate(async () => {
-    var MAX_COUNT = 5
+    var MAX_COUNT = 50
+    var duration = 200
     await new Promise((resolve, reject) => {
       try {
         let lastScroll = 0;
@@ -25,7 +26,7 @@ module.exports = async function autoScroll(page) {
             retry++;
             lastScroll = scrollTop;
           }
-        }, 100);
+        }, duration);
       } catch (err) {
         reject(err.toString());
       }
