@@ -71,5 +71,6 @@ node src/samples/scrawler/pic.baidu.com.js 卡通
 
 ### TODO
 
-- [ ] 集成服务
-- [ ] 破解验证码
+- [x] 知乎图片爬取
+- [ ] DockerFile
+- [ ] 拥抱TypeScript

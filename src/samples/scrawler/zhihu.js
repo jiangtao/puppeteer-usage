@@ -8,8 +8,8 @@ const { isDownloadImageByResponse } = require('../../core/is');
 const { downloadDir, logger } = require('../../config');
 const { time } = require('../../utils');
 const { basename } = require('path')
+const set = new Set();
 
-const set = new Set()
 async function read(qid) {
     try {
         const dir = `${downloadDir}/zhihu/${qid}`
@@ -45,10 +45,12 @@ async function read(qid) {
         logger.error(e);
     }
 }
-console.log(__dirname)
+
+// 读取知乎id
 const lr = require('readline').createInterface({
     input: createReadStream(`${__dirname}/todo/zhihu.txt`)
 })
 lr.on('line', async function (l) {
     await read(l)
 })
+
