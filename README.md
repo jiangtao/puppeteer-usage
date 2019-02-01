@@ -1,6 +1,6 @@
 # puppeteer-usage
 
-基于puppeteer的一些实例应用，本教程仅用来做技术交流使用，请勿用于商业行为。
+基于 puppeteer 的一些实例应用，本教程仅用来做技术交流使用，请勿用于商业行为。
 
 如果您也用`puppeteer`做一些有意义的事儿，欢迎交流。
 
@@ -14,8 +14,8 @@
 
 为什么使用`puppeteer`?
 
-因为api简洁，对于其他的，前端更易上手。
-使用puppeteer的好处，可以无视dom变化,无视接口变化。因为 puppeteer，可以操作浏览器滚动加载等行为，同时可以监听请求，拿到header信息等。具体[代码可以查看](https://github.com/ijs/puppeteer-usage/blob/master/src/samples/scrawler/pic.baidu.com.js#L20-L27)
+因为 api 简洁，对于其他的，前端更易上手。
+使用 puppeteer 的好处，可以无视 dom 变化,无视接口变化。因为 puppeteer，可以操作浏览器滚动加载等行为，同时可以监听请求，拿到 header 信息等。具体[代码可以查看](https://github.com/ijs/puppeteer-usage/blob/master/src/samples/scrawler/pic.baidu.com.js#L20-L27)
 
 可执行下列命令运行实例：
 
@@ -26,7 +26,7 @@ yarn install
 node src/samples/scrawler/pic.baidu.com.js 卡通
 ```
 
-如果需要爬取其他类似页面（如google， weibo, flickr, huaban）等，请自行修改代码中的url地址即可
+如果需要爬取其他类似页面（如 google， weibo, flickr, huaban）等，请自行修改代码中的 url 地址即可
 
 ## 自动化测试
 
@@ -40,7 +40,7 @@ node src/samples/scrawler/pic.baidu.com.js 卡通
 
 - 界面是否出现
 - 白屏时间
-- ui显示是否正常，评判标准是什么？
+- ui 显示是否正常，评判标准是什么？
 - 兼容性测试如何测 ?
 
 2. 功能测试
@@ -55,7 +55,7 @@ node src/samples/scrawler/pic.baidu.com.js 卡通
 - 可以通过注入参数的形式，在业务统计模块加一层判定即可解决
 - 也可以在页面中[注入全局变量](https://github.com/GoogleChrome/puppeteer/blob/master/examples/detect-sniff.js)解决
 
-2. 如何和ui稿对比，确保一致性
+2. 如何和 ui 稿对比，确保一致性
 
 目前想到的方法：通过截屏，人肉对比，标注； 更科学的方案[page-diff](https://github.com/fouber/page-diff)
 
@@ -63,14 +63,14 @@ node src/samples/scrawler/pic.baidu.com.js 卡通
 
 1. 以不同机型，先访问页面，并且截屏，确保可用性
 
-截屏为了存储大小，截屏为jpg，质量为0.6，全页面截屏。我们这里通过人肉判定对比。
+截屏为了存储大小，截屏为 jpg，质量为 0.6，全页面截屏。我们这里通过人肉判定对比。
 
 2. 模拟交互行为，确定核心功能可用性
 
-- 首页入口是否可点击，与 1中的功能其实是相似的
+- 首页入口是否可点击，与 1 中的功能其实是相似的
 
 ### TODO
 
 - [x] 知乎图片爬取
+- [x] 增加 LOG
 - [ ] DockerFile
-- [ ] 拥抱TypeScript
