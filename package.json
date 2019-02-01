@@ -10,6 +10,7 @@
   "license": "MIT",
   "dependencies": {
     "fakerator": "^0.3.0",
+    "ioredis": "^4.5.1",
     "mkdirp": "^0.5.1",
     "moment": "^2.20.1",
     "node-xlsx": "^0.12.1",

@@ -1,12 +1,14 @@
 const path = require('path');
 const log4js = require('log4js');
-
 const root = process.cwd();
 
 module.exports = {
-  downloadDir: path.resolve(root, 'download'),
-  screenDir: path.resolve(root, 'screenshot'),
-  traceDir: path.resolve(root, 'trace'),
+  dir: {
+    download: path.resolve(root, 'download'),
+    screen: path.resolve(root, 'screenshot'),
+    trace: path.resolve(root, 'trace')
+  },
+  redis: require('./redis'),
   logger: {
     info() {
       const logger = log4js.getLogger();

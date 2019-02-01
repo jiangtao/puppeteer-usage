@@ -4,14 +4,14 @@ const mkdirp = promisify(require('mkdirp'));
 const { writeFile } = require('fs');
 const { autoScroll, browser } = require('../../core');
 const { isDownloadImageByResponse } = require('../../core/is');
-const { downloadDir, logger } = require('../../config');
+const { dir, logger } = require('../../config');
 const { time } = require('../../utils');
 
 const word = process.argv.slice(2).pop() || '卡通';
 (async () => {
   try {
     let count = 0;
-    const fullDir = `${downloadDir}/${time.date}/${word}`;
+    const fullDir = `${dir.download}/${time.date}/${word}`;
     await mkdirp(fullDir);
 
     const newBrowser = await browser();

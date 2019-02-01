@@ -3,8 +3,8 @@ const { promisify } = require('util');
 const mkdirp = promisify(require('mkdirp'));
 const { writeFile } = require('fs');
 const { autoScroll, browser } = require('../../core');
+const { dir, logger } = require('../../config');
 const { isDownloadImageByResponse } = require('../../core/is');
-const { downloadDir, logger } = require('../../config');
 const {
   time, request, sleep, faker
 } = require('../../utils');
@@ -15,22 +15,22 @@ const word = process.argv.slice(2).pop() || '金融';
     let count = 0;
     const USER = {
       password: process.env.huaban_pass,
-      mobile  : process.env.huaban_mobile
+      mobile: process.env.huaban_mobile
     };
-    const fullDir = `${downloadDir}/${time.date}/${word}`;
+    const fullDir = `${dir.download}/${time.date}/${word}`;
 
     await mkdirp(fullDir);
 
     const newBrowser = await browser({
       headless: false,
-      timeout : 1200000
+      timeout: 1200000
     });
     const page = await newBrowser.newPage();
     // 伪造ip
 
     // 进入花瓣，保证页面过长的时候，居中
     await await page.setViewport({
-      width : 1024,
+      width: 1024,
       height: 600 // limit height and make the login selector is in visible area
     });
     await page.goto('http://huaban.com/');
@@ -43,7 +43,7 @@ const word = process.argv.slice(2).pop() || '金融';
     await page.type('input#query', word);
     await page.click('#search_form .go');
     await await page.setViewport({
-      width : 1024,
+      width: 1024,
       height: 1500 // 拉长整个页面，保证滚动条滚动的时间长一些
     });
     await sleep(1); // 保证页面渲染完成

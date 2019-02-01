@@ -5,11 +5,11 @@ const { time, sleep } = require('../utils');
 const { browser } = require('../core');
 const { promisify } = require('util');
 const mkdirp = promisify(require('mkdirp'));
-const { logger, screenDir } = require('../config');
+const { logger, dir } = require('../config');
 
 (async () => {
   try {
-    const fullDir = `${screenDir}/${time.date}`;
+    const fullDir = `${dir.screen}/${time.date}`;
     await mkdirp(fullDir);
     const newBrowser = await browser();
     const page = await newBrowser.newPage();
