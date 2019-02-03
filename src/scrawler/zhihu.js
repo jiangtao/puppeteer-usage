@@ -8,14 +8,14 @@ const logger = require("../utils/Logger").getLogger("zhihu");
 const { basename } = require("path");
 const redis = require("../utils/redis");
 
-let caches;
+let caches, newBrowser;
 const read = async function(qid) {
   const fulldir = `${dir.download}/zhihu/${qid}`;
   const month = 30 * 24 * 60 * 60;
   if (!existsSync(fulldir)) {
     await mkdirp(fulldir);
   }
-  const newBrowser = await browser({
+  newBrowser = await browser({
     headless: true,
     timeout: 1200000
   });
@@ -43,6 +43,12 @@ const read = async function(qid) {
   await newBrowser.close();
 };
 
+const closeBrowser = async function() {
+  if (newBrowser) {
+    await newBrowser.close();
+  }
+};
+
 const register = async function() {
   // 读取知乎id
   const lr = require("readline").createInterface({
@@ -55,10 +61,20 @@ const register = async function() {
     try {
       await read(l);
     } catch (e) {
+      if (newBrowser) {
+        await newBrowser.close();
+      }
       logger.error(e.stack);
       process.exit(1);
     }
   });
 };
+process.on("exit", async function() {
+  await closeBrowser();
+});
+process.on("uncaughtException", async function() {
+  await closeBrowser();
+  process.exit(1);
+});
 
 module.exports = register;
