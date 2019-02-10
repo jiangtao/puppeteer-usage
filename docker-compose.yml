@@ -1,18 +1,32 @@
 # reference: https://yeasy.gitbooks.io/docker_practice/
-version: "2"
+version: "3"
 services:
   redis:
-    image: redis:4.0-alpine
     ports:
       - "127.0.0.1:6379:6379"
     restart: always
-
+    build:
+      context: ./redis
+      dockerfile: Dockerfile
+    volumes:
+      - /data/redis/:/redis/data
   scrawler:
-    container_name: scrawer
-    image: node:10-slim
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./logs/:/project/logs
+      - ./download/:/project/download
+    ports:
+      - "8888:8888"
+    command:
+      - /bin/sh
+      - -c
+      - |
+        pm2-runtime pm2.json
+        node src/index.js -s zhihu
+    # tty: true
+    # stdin_open: true
+
     depends_on:
       - redis
-    volumes:
-      - .:/scrawer
-    working_dir: /scrawer
-    entrypoint: /scrawer/entrypoint.sh

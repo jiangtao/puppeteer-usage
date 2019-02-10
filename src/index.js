@@ -4,10 +4,12 @@ const opts = require("commander")
   .version(version)
   .usage("[options] <scrawler ...>")
   .option("-s, --scrawler [scrawler]", "scrawler task")
+  .option("-p, --port [port]", "app server port")
   .parse(process.argv);
 
 const { scrawler, args } = opts;
-console.log(opts);
+console.log(scrawler);
+
 if (!scrawler) {
   console.error("no any scrawler task");
   process.exit(1);
@@ -28,6 +30,6 @@ async function runTask(type, taskName) {
     }
   } catch (e) {
     console.error(e.stack);
-    process.exit(1);
+    // process.exit(1);
   }
 })();

@@ -1,0 +1,15 @@
+{
+  "apps": [
+    {
+      "name": "daemon_server",
+      "script": "src/app.js",
+      "kill_timeout": 5000,
+      "merge_logs": true,
+      "max_memory_restart": "1024M",
+      "env": {
+        "SERVER_NAME": "scrawler",
+        "PORT": 8888
+      }
+    }
+  ]
+}

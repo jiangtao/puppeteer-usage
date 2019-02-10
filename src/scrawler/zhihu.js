@@ -10,13 +10,14 @@ const redis = require("../utils/redis");
 
 let caches, newBrowser;
 const read = async function(qid) {
+  console.log(`starting read ${qid} images`);
   const fulldir = `${dir.download}/zhihu/${qid}`;
   const month = 30 * 24 * 60 * 60;
   if (!existsSync(fulldir)) {
     await mkdirp(fulldir);
   }
   newBrowser = await browser({
-    headless: true,
+    headless: false,
     timeout: 1200000
   });
   const page = await newBrowser.newPage();
@@ -35,7 +36,7 @@ const read = async function(qid) {
         bufferStream.end(buffer);
         bufferStream.pipe(createWriteStream(`${fulldir}/${name}`));
         redis.set(url, 1, month);
-        logger.info(url, `${fulldir}/${name}`);
+        console.log(url, `${fulldir}/${name}`);
       }
     }
   });
@@ -64,17 +65,20 @@ const register = async function() {
       if (newBrowser) {
         await newBrowser.close();
       }
-      logger.error(e.stack);
-      process.exit(1);
+      console.error(e.stack);
+      // process.exit(1);
     }
   });
 };
-process.on("exit", async function() {
+process.on("exit", async function(e) {
+  console.log("exit", e);
   await closeBrowser();
 });
-process.on("uncaughtException", async function() {
+process.on("uncaughtException", async function(e) {
+  console.log(e);
   await closeBrowser();
-  process.exit(1);
+  // process.exit(1);
 });
 
 module.exports = register;
+module.exports.read = read;
