@@ -62,7 +62,7 @@ other
 download
 screenshot
 trace
-*log*
+*.log
 ignore*
 docs
 .idea
