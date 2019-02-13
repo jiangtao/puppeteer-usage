@@ -9,18 +9,14 @@ const { basename } = require("path");
 const redis = require("../utils/redis");
 
 let caches, newBrowser;
-const read = async function(qid) {
+const read = async function(qid, browser, callback) {
   console.log(`starting read ${qid} images`);
   const fulldir = `${dir.download}/zhihu/${qid}`;
   const month = 30 * 24 * 60 * 60;
   if (!existsSync(fulldir)) {
     await mkdirp(fulldir);
   }
-  newBrowser = await browser({
-    headless: false,
-    timeout: 1200000
-  });
-  const page = await newBrowser.newPage();
+  const page = await browser.newPage();
   await page.goto(`https://www.zhihu.com/question/${qid}`);
   page.on("response", async function(response) {
     const url = response.url();
@@ -37,11 +33,12 @@ const read = async function(qid) {
         bufferStream.pipe(createWriteStream(`${fulldir}/${name}`));
         redis.set(url, 1, month);
         console.log(url, `${fulldir}/${name}`);
+        if (typeof callback == "function") callback(url, buffer, bufferStream);
       }
     }
   });
   await autoScroll(page);
-  await newBrowser.close();
+  await closeBrowser();
 };
 
 const closeBrowser = async function() {
@@ -50,23 +47,28 @@ const closeBrowser = async function() {
   }
 };
 
-const register = async function() {
+var queue = [];
+const register = async function(callback) {
+  if (!newBrowser) {
+    newBrowser = await browser({
+      headless: true,
+      timeout: 1200000
+    });
+  }
   // 读取知乎id
   const lr = require("readline").createInterface({
     input: createReadStream(`${__dirname}/todo/zhihu.txt`)
   });
   lr.on("line", async function(l) {
-    if (!caches) {
-      caches = new Set(await redis.keys("*"));
-    }
     try {
-      await read(l);
-    } catch (e) {
-      if (newBrowser) {
-        await newBrowser.close();
+      if (!caches) {
+        caches = new Set(await redis.keys("*"));
       }
+      await read(l, newBrowser, callback);
+    } catch (e) {
       console.error(e.stack);
-      // process.exit(1);
+      await closeBrowser();
+      process.exit(1);
     }
   });
 };
@@ -77,7 +79,7 @@ process.on("exit", async function(e) {
 process.on("uncaughtException", async function(e) {
   console.log(e);
   await closeBrowser();
-  // process.exit(1);
+  process.exit(1);
 });
 
 module.exports = register;

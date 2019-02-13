@@ -8,7 +8,6 @@ const opts = require("commander")
   .parse(process.argv);
 
 const { scrawler, args } = opts;
-console.log(scrawler);
 
 if (!scrawler) {
   console.error("no any scrawler task");

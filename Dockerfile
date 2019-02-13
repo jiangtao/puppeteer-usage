@@ -1,41 +1,30 @@
-FROM redream/puppeteer-base
-COPY . /project
-WORKDIR /project
-VOLUME /project/logs
-VOLUME /project/download
+FROM jerret321/puppeteer-linux
+USER root
 
-# server
-ENV PORT 8888
-# redis
-ENV REDIS_PORT 6379
-ENV REDIS_HOST 127.0.0.1
-# ENV REDIS_PASS 
-ENV REDIS_DB 15
+ENV DIR=/home/pptruser/project 
+ENV PORT=8888 
+ENV REDIS_PORT=6379 
+ENV REDIS_HOST=redis 
+ENV REDIS_DB=15
+ENV PUPPETEER_LINUX=true
+ENV NODE_ENV=production
 
-# node
-ENV NODE_ENV production
-ENV PUPPETEER_LINUX true
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-ENV PUPPETEER_DOWNLOAD_HOST https://storage.googleapis.com.cnpmjs.org
+COPY . $DIR
+WORKDIR $DIR
+VOLUME $DIR/logs
+VOLUME $DIR/download
 
 # huaban.com
 # ENV huaban_pass 
 # ENV huaban_mobile 
 
-RUN mkdir -p /project \
-    && chmod -R 777 /project \
-    && groupadd -r pptruser \
-    && useradd -r -g pptruser -G audio,video pptruser \
-    && mkdir -p /home/pptruser/Downloads \
-    && chown -R pptruser:pptruser /home/pptruser \
-    && chown -R pptruser:pptruser /usr/local/lib/node_modules \
-    && npm i --registry=https://registry.npm.taobao.org \  
+RUN npm i --registry=https://registry.npm.taobao.org \  
     && npm i pm2 -g --registry=https://registry.npm.taobao.org \
-    && chown -R pptruser:pptruser ./node_modules
+    && chown -R pptruser:pptruser /usr/local/lib/node_modules \
+    && chown -R pptruser:pptruser $DIR/logs \
+    && chown -R pptruser:pptruser ./node_modules \
+    && chown -R pptruser:pptruser $DIR/download
 
-ENTRYPOINT ["dumb-init", "--"]
+# USER pptruser
 
-# Run everything after as non-privileged user.
-USER pptruser
-# CMD ["nohup","node", "src/app.js", "&"]
-CMD ["pm2-runtime", "pm2.json"]
+# CMD ["pm2-runtime", "pm2.json"]

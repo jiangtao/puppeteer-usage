@@ -17,7 +17,7 @@
     "node-xlsx": "^0.12.1",
     "optimist": "^0.6.1",
     "page-diff": "^0.2.5",
-    "puppeteer": "^1.1.1",
+    "puppeteer": "^1.9.0",
     "request": "^2.83.0",
     "koa": "^2.7.0",
     "log4js": "^2.5.3"

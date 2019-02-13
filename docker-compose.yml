@@ -3,30 +3,33 @@ version: "3"
 services:
   redis:
     ports:
-      - "127.0.0.1:6379:6379"
+      - "6379:6379"
     restart: always
     build:
       context: ./redis
       dockerfile: Dockerfile
+    container_name: pp_redis
     volumes:
       - /data/redis/:/redis/data
   scrawler:
+    depends_on:
+      - redis
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: pp_scrawler
     volumes:
-      - ./logs/:/project/logs
-      - ./download/:/project/download
+      - ./logs/:/home/pptruser/project/logs
+      - ./download/:/home/pptruser/project/download
     ports:
       - "8888:8888"
     command:
       - /bin/sh
       - -c
       - |
-        pm2-runtime pm2.json
         node src/index.js -s zhihu
+        pm2-runtime pm2.json
     # tty: true
     # stdin_open: true
-
-    depends_on:
+    links:
       - redis
