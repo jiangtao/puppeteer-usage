@@ -1,14 +1,5 @@
 FROM jerret321/puppeteer-linux
 USER root
-
-ENV DIR=/home/pptruser/project 
-ENV PORT=8888 
-ENV REDIS_PORT=6379 
-ENV REDIS_HOST=redis 
-ENV REDIS_DB=15
-ENV PUPPETEER_LINUX=true
-ENV NODE_ENV=production
-
 COPY . $DIR
 WORKDIR $DIR
 VOLUME $DIR/logs

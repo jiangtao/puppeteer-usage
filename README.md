@@ -73,4 +73,6 @@ node src/samples/scrawler/pic.baidu.com.js 卡通
 
 - [x] 知乎图片爬取
 - [x] 增加 LOG
-- [ ] DockerFile
+- [x] 集成 Docker
+- [ ] 暴露接口
+- [ ] 图片显示界面

@@ -10,7 +10,13 @@ services:
       dockerfile: Dockerfile
     container_name: pp_redis
     volumes:
-      - /data/redis/:/redis/data
+      - "./redis/redis.conf:/etc/redis/redis.conf"
+      - "/data/redis/:/redis/data"
+    env_file: ./config/common.env
+    command: redis-server --requirepass $REDIS_PASS
+    expose:
+      - "6379"
+
   scrawler:
     depends_on:
       - redis
@@ -18,11 +24,16 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: pp_scrawler
+    env_file: ./config/common.env
     volumes:
-      - ./logs/:/home/pptruser/project/logs
-      - ./download/:/home/pptruser/project/download
+      - "./logs/:/home/pptruser/project/logs"
+      - "./download/:/home/pptruser/project/download"
+    command: 
+
     ports:
       - "8888:8888"
+    expose:
+      - "8888"
     command:
       - /bin/sh
       - -c
