@@ -33,21 +33,21 @@ const read = async function(qid, browser, callback) {
         bufferStream.pipe(createWriteStream(`${fulldir}/${name}`));
         redis.set(url, 1, month);
         console.log(url, `${fulldir}/${name}`);
-        if (typeof callback == "function") callback(url, buffer, bufferStream);
+        if (typeof callback == "function")
+          callback(url, meta, buffer, bufferStream);
       }
     }
   });
   await autoScroll(page);
-  await closeBrowser();
+  await closeBrowser(newBrowser);
 };
 
-const closeBrowser = async function() {
-  if (newBrowser) {
-    await newBrowser.close();
+const closeBrowser = async function(browser) {
+  if (browser) {
+    await browser.close();
   }
 };
 
-var queue = [];
 const register = async function(callback) {
   if (!newBrowser) {
     newBrowser = await browser({
@@ -67,18 +67,18 @@ const register = async function(callback) {
       await read(l, newBrowser, callback);
     } catch (e) {
       console.error(e.stack);
-      await closeBrowser();
+      await closeBrowser(newBrowser);
       process.exit(1);
     }
   });
 };
 process.on("exit", async function(e) {
   console.log("exit", e);
-  await closeBrowser();
+  await closeBrowser(newBrowser);
 });
 process.on("uncaughtException", async function(e) {
   console.log(e);
-  await closeBrowser();
+  await closeBrowser(newBrowser);
   process.exit(1);
 });
 

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "lint": "./node_modules/.bin/eslint src *.js"
+    "lint": "./node_modules/.bin/eslint src *.js",
+    "dev": "NODE_ENV=development ./node_modules/.bin/nodemon src/app.js"
   },
   "author": "",
   "license": "MIT",
@@ -12,6 +13,9 @@
     "commander": "^2.19.0",
     "fakerator": "^0.3.0",
     "ioredis": "^4.5.1",
+    "koa": "^2.7.0",
+    "koa-router": "^7.4.0",
+    "log4js": "^2.5.3",
     "mkdirp": "^0.5.1",
     "moment": "^2.20.1",
     "node-xlsx": "^0.12.1",
@@ -19,14 +23,14 @@
     "page-diff": "^0.2.5",
     "puppeteer": "^1.9.0",
     "request": "^2.83.0",
-    "koa": "^2.7.0",
-    "log4js": "^2.5.3"
+    "require-dir": "^1.2.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.2",
     "eslint": "^4.15.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-html": "^4.0.1",
-    "eslint-plugin-import": "^2.8.0"
+    "eslint-plugin-import": "^2.8.0",
+    "nodemon": "^1.18.10"
   }
 }
