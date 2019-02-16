@@ -14,26 +14,28 @@ router.get("/api/v1/img", async (ctx, next) => {
     headless: true,
     timeout: 1200000
   });
-
-  console.log(`starting read ${ctx.params.url} images`);
+  const url = ctx.query.url;
+  console.log(`starting read ${url} images`);
   const page = await newBrowser.newPage();
   const imgs = new Set();
-  const max = ctx.params.max || 50;
-  await page.goto(`https://www.zhihu.com/question/27648526`);
+  const max = ctx.query.max || 50;
+  await page.goto(url);
   page.on("request", async function(request) {
     const url = request.url();
     if (request.resourceType() === "image") {
       if (!url.includes("_hd")) return;
       if (imgs.size < max) {
-        imgs.add(url);
         console.log(imgs.size, url);
-      } else if (imgs.size === max) {
-        ctx.imgs = imgs;
-        page.close();
+        imgs.add(url);
+      } else if (imgs.size == max) {
+        ctx.body = [...imgs];
+        await newBrowser.close();
       }
     }
   });
   await autoScroll(page);
+
   await newBrowser.close();
+  ctx.body = [...imgs];
 });
 module.exports = router;

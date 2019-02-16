@@ -6,8 +6,8 @@ function app(name, port) {
     try {
       await next();
     } catch (e) {
-      if (e.message.includes("Target closed")) {
-        ctx.body = [...ctx.imgs];
+      if (e.message.includes("puppeteer")) {
+        console.log("puppeteer normal");
       }
     }
   });
