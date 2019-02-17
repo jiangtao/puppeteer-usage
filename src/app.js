@@ -12,8 +12,9 @@ function app(name, port) {
     }
   });
   app.use(router.routes()).use(router.allowedMethods());
-  // app.use(router.routes()).use(router.allowedMethods());
-  app.listen(port, () => console.log(`http://localhost:${port} is running`));
+  app.listen(port, () =>
+    console.log(`${name} is running on http://localhost:${port} `)
+  );
 }
 app(process.env.SERVER_NAME || "daemon", process.env.PORT || 9999);
 

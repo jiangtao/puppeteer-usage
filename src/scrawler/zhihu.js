@@ -12,7 +12,7 @@ let caches, newBrowser;
 const read = async function(qid, browser, callback) {
   console.log(`starting read ${qid} images`);
   const fulldir = `${dir.download}/zhihu/${qid}`;
-  const month = 30 * 24 * 60 * 60;
+  const month = 1 * 24 * 60 * 60;
   if (!existsSync(fulldir)) {
     await mkdirp(fulldir);
   }
@@ -32,7 +32,7 @@ const read = async function(qid, browser, callback) {
         bufferStream.end(buffer);
         bufferStream.pipe(createWriteStream(`${fulldir}/${name}`));
         redis.set(url, 1, month);
-        console.log(url, `${fulldir}/${name}`);
+        logger.log(url, `${fulldir}/${name}`);
         if (typeof callback == "function")
           callback(url, meta, buffer, bufferStream);
       }
@@ -66,18 +66,18 @@ const register = async function(callback) {
       }
       await read(l, newBrowser, callback);
     } catch (e) {
-      console.error(e.stack);
+      logger.error(e.stack);
       await closeBrowser(newBrowser);
       process.exit(1);
     }
   });
 };
 process.on("exit", async function(e) {
-  console.log("exit", e);
+  logger.error("exit", e);
   await closeBrowser(newBrowser);
 });
 process.on("uncaughtException", async function(e) {
-  console.log(e);
+  logger.error(e);
   await closeBrowser(newBrowser);
   process.exit(1);
 });

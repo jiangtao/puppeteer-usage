@@ -38,7 +38,7 @@ services:
       - /bin/sh
       - -c
       - |
-        node src/index.js -s zhihu
+        # node src/index.js -s zhihu
         pm2-runtime pm2.json
     # tty: true
     # stdin_open: true

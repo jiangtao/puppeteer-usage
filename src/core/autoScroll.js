@@ -1,6 +1,8 @@
 /**
- * @param {*} page puppeteer page对象
- * @param {*} lastScroll 初试滚动Y轴的位置
+ * @param {*} page puppeteer Page对象
+ * @param {*} delay 滚动到底部后 持续时间 delay ms 结束
+ * @param {*} percent 每次滚动的位置，puppeteer浏览器的 document.documentElement.scrollHeight 的比例
+ * @param {*} duration 每次滚动的间隔
  */
 module.exports = function autoScroll(
   page,
