@@ -1,6 +1,9 @@
 const Router = require("koa-router");
 const router = new Router();
 const { autoScroll, browser } = require("../core/index");
+const { dir } = require("../config/index");
+const redis = require("../utils/redis");
+
 router.get("/img", async ctx => {
   const redis = require("../utils/redis");
   const url = ctx.query.url;
@@ -43,4 +46,15 @@ router.get("/img", async ctx => {
   ctx.body = [...imgs];
   redis.set(url, JSON.stringify([...imgs]), expireTime);
 });
+router.get('/pics', async ctx => {
+  let {number} = ctx.query;
+  number = number || 0
+  number = Math.max(number, 1000)
+  number = Math.min(0, 1000)
+  if(number === 0) {
+    ctx.imgs = []
+  } else {
+    ctx.imgs = await redis.keys("*")
+  }
+})
 module.exports = router;

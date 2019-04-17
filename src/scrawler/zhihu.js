@@ -9,10 +9,11 @@ const { basename } = require("path");
 const redis = require("../utils/redis");
 
 let caches, newBrowser;
+// TODO: change redis to mongo
 const read = async function(qid, browser, callback) {
   console.log(`starting read ${qid} images`);
   const fulldir = `${dir.download}/zhihu/${qid}`;
-  const month = 1 * 24 * 60 * 60;
+  const month = 12 * 24 * 60 * 60;
   if (!existsSync(fulldir)) {
     await mkdirp(fulldir);
   }

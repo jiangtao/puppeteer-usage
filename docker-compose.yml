@@ -13,7 +13,12 @@ services:
       - "./redis/redis.conf:/etc/redis/redis.conf"
       - "/data/redis/:/redis/data"
     env_file: ./config/common.env
-    command: redis-server --requirepass $REDIS_PASS
+    command: 
+      - /bin/sh
+      - -c
+      - |
+        sysctl vm.overcommit_memory=1
+        redis-server --requirepass $REDIS_PASS
     expose:
       - "6379"
 
