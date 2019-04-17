@@ -8,6 +8,7 @@
   },
   "extends": "airbnb-base/legacy",
   "rules": {
+      "quote-props": 1,
       "consistent-return": 1,
       "prefer-destructuring": 0,
       "no-mixed-spaces-and-tabs": 0,
@@ -22,9 +23,10 @@
       "prefer-rest-params": 1,
       "no-plusplus": 1,
       "radix": 1,
+      "indent": 1,
       "no-use-before-define": 1,
       "key-spacing": [
-        2,
+        1,
         {
           "beforeColon": false,
           "afterColon": true,

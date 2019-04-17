@@ -10,8 +10,7 @@ module.exports = function autoScroll(
   percent = 0.3,
   duration = 16
 ) {
-  return page.evaluate(
-    new Function(`
+  return page.evaluate(new Function(`
   var lastDate;
   var duration = ${duration};
   return new Promise((resolve, reject) => {
@@ -38,6 +37,5 @@ module.exports = function autoScroll(
       reject(err.toString());
     }
   });
-  `)
-  );
+  `));
 };

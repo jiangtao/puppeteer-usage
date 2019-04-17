@@ -1,7 +1,7 @@
 const Router = require("koa-router");
 const router = new Router();
 const { autoScroll, browser } = require("../core/index");
-router.post("/img", async ctx => {
+router.get("/img", async ctx => {
   const redis = require("../utils/redis");
   const url = ctx.query.url;
   console.log(`starting read ${url} images`);

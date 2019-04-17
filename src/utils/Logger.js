@@ -1,7 +1,7 @@
-const log4js = require("log4js");
-const path = require("path");
+const log4js = require('log4js');
+const path = require('path');
 
-const root = path.resolve(process.cwd(), "logs");
+const root = path.resolve(process.cwd(), 'logs');
 
 class Logger {
   constructor(name) {
@@ -14,34 +14,34 @@ class Logger {
     log4js.configure({
       appenders: {
         access: {
-          type: "file",
-          filename: `${root}/${LOG_ACCESS}.log`,
-          pattern: "yyyy-MM-dd-hh",
-          compress: true,
-          encoding: "utf-8",
-          mode: 0o0640,
-          flags: "w+",
+          type      : 'file',
+          filename  : `${root}/${LOG_ACCESS}.log`,
+          pattern   : 'yyyy-MM-dd-hh',
+          compress  : true,
+          encoding  : 'utf-8',
+          mode      : 0o0640,
+          flags     : 'w+',
           numBackups: 5,
           maxLogSize: 10 * 1024 * 1024
         },
 
         error: {
-          type: "file",
-          filename: `${root}/${LOG_ERROR}.log`,
-          pattern: "yyyy-MM-dd-hh",
-          compress: true,
-          encoding: "utf-8",
-          mode: 0o0640,
-          flags: "w+",
+          type      : 'file',
+          filename  : `${root}/${LOG_ERROR}.log`,
+          pattern   : 'yyyy-MM-dd-hh',
+          compress  : true,
+          encoding  : 'utf-8',
+          mode      : 0o0640,
+          flags     : 'w+',
           numBackups: 5,
           maxLogSize: 10 * 1024 * 1024
         },
-        console: { type: "console", pattern: "yyyy-MM-dd-hh" }
+        console: { type: 'console', pattern: 'yyyy-MM-dd-hh' }
       },
       categories: {
-        [LOG_ACCESS]: { appenders: ["console", "access"], level: "info" },
-        [LOG_ERROR]: { appenders: ["console", "error"], level: "error" },
-        default: { appenders: ["console", "access"], level: "trace" }
+        [LOG_ACCESS]: { appenders: ['console', 'access'], level: 'info' },
+        [LOG_ERROR] : { appenders: ['console', 'error'], level: 'error' },
+        default     : { appenders: ['console', 'access'], level: 'trace' }
       }
     });
 

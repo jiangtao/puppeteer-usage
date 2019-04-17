@@ -8,6 +8,6 @@ module.exports = {
     return moment().format('YYYYMMDDHHmmSS');
   },
   get special() {
-    return moment().format('YYYY-MM-DD-HH_mm_SS')
+    return moment().format('YYYY-MM-DD-HH_mm_SS');
   }
 };
