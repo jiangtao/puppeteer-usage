@@ -3,7 +3,7 @@ let config = {
     port    : 6379, // Redis port
     host    : '127.0.0.1', // Redis host
     family  : 4, // 4 (IPv4) or 6 (IPv6)
-    password: process.env.REDIS_PASS || '',
+    password: process.env.REDIS_PASS || '123456',
     db      : 15
   },
   production: {

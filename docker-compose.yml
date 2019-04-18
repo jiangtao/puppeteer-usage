@@ -17,14 +17,23 @@ services:
       - /bin/sh
       - -c
       - |
-        sysctl vm.overcommit_memory=1
         redis-server --requirepass $REDIS_PASS
     expose:
       - "6379"
+  mongo:
+    ports:
+      - "27017:27017"
+    restart: always
+    image: mongo
+    environment: 
+      MONGO_INITDB_ROOT_USERNAME: $MONGO_USER
+      MONGO_INITDB_ROOT_PASSWORD: $MONGO_PASS
+    volumes:
+      - "/data/mongo:/data/db"
 
   scrawler:
     depends_on:
-      - redis
+      - mongo
     build:
       context: .
       dockerfile: Dockerfile

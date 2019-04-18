@@ -3,6 +3,7 @@ const router = new Router();
 const { autoScroll, browser } = require("../core/index");
 const { dir } = require("../config/index");
 const redis = require("../utils/redis");
+const Pics = require('../model/pics')
 
 router.get("/img", async ctx => {
   const redis = require("../utils/redis");
@@ -47,14 +48,16 @@ router.get("/img", async ctx => {
   redis.set(url, JSON.stringify([...imgs]), expireTime);
 });
 router.get('/pics', async ctx => {
-  let {number} = ctx.query;
+  let {number, url, pid } = ctx.query;
   number = number || 0
   number = Math.max(number, 1000)
-  number = Math.min(0, 1000)
-  if(number === 0) {
-    ctx.imgs = []
-  } else {
-    ctx.imgs = await redis.keys("*")
+  let results = []
+  if(pid) {
+    results = await Pics.find({_id: pid}).limit(number).lean()
+  } else if(url) {
+    results = await Pics.find({_id: pid}).limit(number).lean()
   }
+  ctx.body = results
+  
 })
 module.exports = router;

@@ -13,6 +13,7 @@ if (!scrawler) {
   console.error("no any scrawler task");
   process.exit(1);
 }
+require('./model/instance')
 
 async function runTask(type, taskName) {
   const taskDir = {

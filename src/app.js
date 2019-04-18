@@ -1,3 +1,4 @@
+require('./model/instance')
 function app(name, port) {
   const Koa = require("koa");
   const app = new Koa();

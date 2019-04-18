@@ -11,6 +11,7 @@
   "license": "MIT",
   "dependencies": {
     "commander": "^2.19.0",
+    "es6-promise": "^4.2.6",
     "fakerator": "^0.3.0",
     "ioredis": "^4.5.1",
     "koa": "^2.7.0",
@@ -18,6 +19,7 @@
     "log4js": "^2.5.3",
     "mkdirp": "^0.5.1",
     "moment": "^2.20.1",
+    "mongoose": "^5.5.2",
     "node-xlsx": "^0.12.1",
     "optimist": "^0.6.1",
     "page-diff": "^0.2.5",
