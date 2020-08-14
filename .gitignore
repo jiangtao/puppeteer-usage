@@ -67,3 +67,4 @@ ignore*
 docs
 .idea
 pro*
+trace
