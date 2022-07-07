@@ -18,7 +18,7 @@
     "koa-router": "^7.4.0",
     "log4js": "^2.5.3",
     "mkdirp": "^0.5.1",
-    "moment": "^2.20.1",
+    "moment": "^2.29.4",
     "mongoose": "^5.5.2",
     "node-xlsx": "^0.12.1",
     "optimist": "^0.6.1",
